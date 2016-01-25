@@ -1,5 +1,36 @@
-clean:
-	echo "cleaning the project"
+CC		:= g++
+CFLAGS	:= -g -std=c++11 -O3 -pedantic 
+LFLAGS	:= -static-libgcc -static-libstdc++ -static
 
-build:
-	echo "building the project"
+SRC_DIR	:= src
+BUILD_DIR	:= build
+BIN_DIR	:= ../../bin
+
+RM		:= rm -rf
+
+INCLUDES:= -I. -Iinc
+LIBS	:=
+
+SOURCES	:= $(wildcard $(SRC_DIR)/*.cpp)
+OBJECTS	:= $(SOURCES:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
+TARGET	:= $(BIN_DIR)/jsontest
+
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS)
+	mkdir -p $(BIN_DIR)
+	@echo "  Linking..."
+	$(LINK.cc) $^ -o $@
+
+
+$(OBJECTS): $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
+	mkdir -p $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+clean:
+	@echo "  Cleaning..."
+	$(RM) $(OBJECTS) $(TARGET)
+	$(RM) $(BIN_DIR)
+	$(RM) $(BUILD_DIR)
+
+.PHONY: all clean
