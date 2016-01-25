@@ -1,6 +1,7 @@
 clean:
-	cd json && $(MAKE) clean
-	cd test && $(MAKE) clean
-build:
-	cd json && $(MAKE) all
-	cd test && $(MAKE) all
+	rm -rf inc
+	cd src/json && $(MAKE) clean
+	cd src/test && $(MAKE) clean
+all:
+	cd src/json && $(MAKE) all
+	cd src/test && $(MAKE) all

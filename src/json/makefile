@@ -4,7 +4,8 @@ LFLAGS	:= -static-libgcc -static-libstdc++ -static
 
 SRC_DIR	:= src
 BUILD_DIR	:= build
-BIN_DIR	:= bin
+BIN_DIR	:= ../../bin
+EXPORT_INC:=../../inc
 
 RM		:= rm -rf
 
@@ -19,8 +20,10 @@ all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
 	mkdir -p $(BIN_DIR)
+	mkdir -p $(EXPORT_INC)
 	@echo "  Linking..."
 	$(LINK.cc) -shared $^ -o $@
+	cp inc/* $(EXPORT_INC)/.
 # $(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS) $(LFLAGS) $(LIBS)
 
 
